@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Mis Tareas</h2>
+<form method="post" class="mb-4">
+    <div class="mb-3">
+        <label class="form-label">Título</label>
+        <input type="text" name="title" class="form-control" required>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Descripción</label>
+        <input type="text" name="description" class="form-control">
+    </div>
+    <button type="submit" class="btn btn-primary">Crear Tarea</button>
+</form>
+<hr>
+<h3>Lista de Tareas</h3>
+<ul class="list-group">
+{% for task in tasks %}
+    <li class="list-group-item d-flex justify-content-between align-items-center">
+        <div>
+            <strong>{{ task.title }}</strong>: {{ task.description }}
+        </div>
+        <div>
+            {% if not task.completed %}
+                <a href="{{ url_for('complete', task_id=task.id) }}" class="btn btn-sm btn-success">Completar</a>
+            {% endif %}
+            <a href="{{ url_for('delete', task_id=task.id) }}" class="btn btn-sm btn-danger">Eliminar</a>
+        </div>
+    </li>
+{% endfor %}
+</ul>
+{% endblock %}
